@@ -16,27 +16,27 @@ window.SITE = {
     {
       ref:  'T137.407.11.041.00',
       name: 'Tissot PRX 40mm',
-      img:  'https://www.tissotwatches.com/dw/image/v2/BKKD_PRD/on/demandware.static/-/Sites-Tissot-Catalogue/default/dw95c4331d/product-pictures/63f42767-a9f5-4cdd-b952-8ea7b82b7e0c_T137-407-11-041-00_shadow.png?sm=fit&sw=800&sh=800,gravity=center'
+      img:  'img/tissot-prx-40mm.jpg'
     },
     {
       ref:  'TW2V43600',
       name: 'Q Timex 1979 Reissue',
-      img:  'https://timex.com/cdn/shop/articles/Q_Timex_Reissue_Degrade_beauty_2_RGB_Final_1_1.jpg?v=1700511673'
+      img:  'img/q-timex-1979.jpg'
     },
     {
       ref:  'NY4058-01E',
       name: 'Citizen Automatic "Classics"',
-      img:  'https://assets.chrimg.com/image/christ/89207449/89207449/product_lg/89207449.jpg'
+      img:  'img/citizen-classics.jpg'
     },
     {
       ref:  'TW2Y66700',
       name: 'Timex Automatic 1983 E Line',
-      img:  'https://timex.eu/cdn/shop/files/12916_TX_TC_25_FGI_desktop_TW2Y66700_2.jpg?v=1769081199&width=1980'
+      img:  'img/timex-automatic-1983.jpg'
     },
     {
       ref:  'MTP-1302PD-3AV',
-      name: 'Casio MTP 1302"',
-      img:  'https://www.casio.com/content/dam/casio/product-info/locales/de/de/timepiece/product/watch/M/MT/MTP/mtp-1302pd-3av/assets/MTP-1302PD-3AV.png.transform/main-visual-pc/image.png'
+      name: 'Casio MTP 1302',
+      img:  'img/casio-mtp-1302.jpg'
     }
   ],
 
@@ -45,12 +45,12 @@ window.SITE = {
     {
       ref:  'SRPD37J1',
       name: 'Seiko Presage',
-      img:  'https://clockchasers.com/cdn/shop/files/seiko-presage-automatik-herrenuhr-srpd37j1-151250_458x.jpg?v=1742045717'
+      img:  'img/seiko-presage.jpg'
     },
     {
       ref:  'TW2Y60600',
       name: 'Waterbury Heritage Automatic GMT',
-      img:  'https://timex.eu/cdn/shop/files/TW2Y60600_c4b8e9b2-afc2-4577-8bbb-00ddc5d0952a.png?v=1776198234&width=768'
+      img:  'img/waterbury-heritage-automatic-gmt.jpg'
     }
   ],
 

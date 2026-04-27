@@ -405,7 +405,7 @@
     </div>`;
   }
 
-  const teaserWatches = SITE.collection.slice(0, 3);
+  const teaserWatches = SITE.collection;
   document.getElementById('watch-teaser').innerHTML = teaserWatches.map(w => watchCardHTML(w)).join('');
 
   // ── ARTICLE TEASER ─────────────────────────────────────────
