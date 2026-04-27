@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Collection — honigkuchenpferd64</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-mark"></span>
+      honigkuchenpferd64
+    </a>
+    <div class="nav-links">
+      <a href="collection.html" class="nav-link active">Collection</a>
+      <a href="wanted.html"     class="nav-link">Wanted</a>
+      <a href="articles.html"   class="nav-link">Articles</a>
+      <a href="https://github.com/honigkuchenpferd64" target="_blank" class="nav-github">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="wrap" style="position:relative; z-index:2;">
+    <div class="page-header-label">In hand</div>
+    <h1 class="reveal">Collection</h1>
+  </div>
+  <!-- Geometric decoration -->
+  <svg class="page-header-geo" width="500" height="400" viewBox="0 0 500 400" fill="none">
+    <rect x="100" y="-60" width="300" height="300" stroke="#233a28" stroke-width="1" opacity="0.4" transform="rotate(18 250 100)"/>
+    <circle cx="400" cy="200" r="120" stroke="#233a28" stroke-width="1" opacity="0.3"/>
+    <rect x="300" y="100" width="80" height="80" fill="#233a28" opacity="0.12"/>
+    <line x1="0" y1="350" x2="500" y2="200" stroke="#233a28" stroke-width="1" opacity="0.2"/>
+  </svg>
+</header>
+
+<!-- GRID -->
+<main>
+  <div class="wrap" style="padding-top: 48px; padding-bottom: 80px;">
+    <div class="watch-grid" id="collection-grid"></div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; width:100%; flex-wrap:wrap; gap:12px;">
+    <div class="footer-name">
+      <div class="footer-mark">
+        <span class="footer-sq"></span>
+        <span class="footer-ci"></span>
+        <span class="footer-sq" style="opacity:.4;"></span>
+      </div>
+      honigkuchenpferd64
+    </div>
+    <a href="https://github.com/honigkuchenpferd64" target="_blank" class="footer-github">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+      github.com/honigkuchenpferd64
+    </a>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script>
+  const phSvg = `<svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="ph-svg">
+    <rect x="18" y="2" width="24" height="8" rx="1" stroke="#233a28" stroke-width="1.5"/>
+    <rect x="18" y="70" width="24" height="8" rx="1" stroke="#233a28" stroke-width="1.5"/>
+    <circle cx="30" cy="40" r="22" stroke="#233a28" stroke-width="1.5"/>
+    <circle cx="30" cy="40" r="3" fill="#233a28"/>
+    <line x1="30" y1="22" x2="30" y2="40" stroke="#233a28" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="30" y1="40" x2="42" y2="40" stroke="#233a28" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`;
+
+  document.getElementById('collection-grid').innerHTML = SITE.collection.map(w => `
+    <div class="watch-card">
+      <span class="card-badge">Owned</span>
+      <div class="card-img-wrap">
+        ${w.img
+          ? `<img src="${w.img}" alt="${w.name}" loading="lazy">`
+          : `<div class="card-placeholder">${phSvg}</div>`}
+        <div class="card-hover-plane"></div>
+      </div>
+      <div class="card-info">
+        <div class="card-ref">${w.ref}</div>
+        <div class="card-name">${w.name}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

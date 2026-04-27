@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Article — honigkuchenpferd64</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* Title word-by-word reveal */
+  .title-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .title-word-inner {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(110%);
+    animation: wordIn .8s cubic-bezier(.16,1,.3,1) both;
+  }
+  @keyframes wordIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reading progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    width: 0%;
+    z-index: 150;
+    transition: width .1s linear;
+  }
+
+  /* Geometric side accent on article */
+  .article-geo-left {
+    position: fixed;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 120px;
+    background: var(--accent);
+    opacity: 0.15;
+  }
+  @media (max-width: 960px) { .article-geo-left { display: none; } }
+
+  .article-page-wrap {
+    padding-bottom: 80px;
+  }
+
+  /* Not found */
+  .not-found {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .not-found h2 {
+    font-family: var(--serif);
+    font-size: 48px;
+    color: var(--bright);
+    margin-bottom: 16px;
+  }
+  .not-found p { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="article-geo-left"></div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-mark"></span>
+      honigkuchenpferd64
+    </a>
+    <div class="nav-links">
+      <a href="collection.html" class="nav-link">Collection</a>
+      <a href="wanted.html"     class="nav-link">Wanted</a>
+      <a href="articles.html"   class="nav-link active">Articles</a>
+      <a href="https://github.com/honigkuchenpferd64" target="_blank" class="nav-github">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ARTICLE CONTENT (injected by JS) -->
+<main id="article-root"></main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; width:100%; flex-wrap:wrap; gap:12px;">
+    <div class="footer-name">
+      <div class="footer-mark">
+        <span class="footer-sq"></span>
+        <span class="footer-ci"></span>
+        <span class="footer-sq" style="opacity:.4;"></span>
+      </div>
+      honigkuchenpferd64
+    </div>
+    <a href="https://github.com/honigkuchenpferd64" target="_blank" class="footer-github">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+      github.com/honigkuchenpferd64
+    </a>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script>
+  const id  = new URLSearchParams(window.location.search).get('id');
+  const art = SITE.articles.find(a => a.id === id);
+  const root = document.getElementById('article-root');
+
+  if (!art) {
+    root.innerHTML = `<div class="wrap not-found">
+      <h2>Article not found.</h2>
+      <p><a href="articles.html" style="color:var(--accent);">← Back to articles</a></p>
+    </div>`;
+  } else {
+    // Update page title
+    document.title = `${art.title} — honigkuchenpferd64`;
+
+    const dateStr = new Date(art.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Animate title word by word
+    const words = art.title.split(' ').map((w, i) =>
+      `<span class="title-word"><span class="title-word-inner" style="animation-delay:${.35 + i * .08}s">${w}</span></span>`
+    ).join(' ');
+
+    const bannerHTML = art.img
+      ? `<div class="article-banner reveal"><img src="${art.img}" alt="${art.title}"></div>`
+      : ``;
+
+    root.innerHTML = `
+      <div class="wrap article-page-wrap">
+        <a href="articles.html" class="back-link reveal"><span>←</span> All Articles</a>
+
+        <header class="article-header">
+          <div class="article-header-meta reveal reveal-d1">
+            <span class="article-date">${dateStr}</span>
+            <span class="article-tag">${art.tag}</span>
+          </div>
+          <h1 class="article-header-title">${words}</h1>
+        </header>
+
+        ${bannerHTML}
+
+        <div class="article-body reveal">
+          ${art.body}
+        </div>
+
+        <div style="padding: 40px 0 0; border-top: 1px solid var(--border); margin-top: 24px;">
+          <a href="articles.html" class="back-link"><span>←</span> Back to Articles</a>
+        </div>
+      </div>`;
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+      document.getElementById('progress').style.width = pct + '%';
+    });
+  }
+</script>
+</body>
+</html>
