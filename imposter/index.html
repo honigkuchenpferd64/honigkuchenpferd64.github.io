@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Imposter – Das Party-Spiel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14161c;
+    --panel: #1c1f28;
+    --panel-2: #232733;
+    --line: #333849;
+    --gold: #d4a24c;
+    --gold-dim: #9c7c42;
+    --orange: #e2883b;
+    --red: #c1443c;
+    --text: #eef0f0;
+    --muted: #8b8f9c;
+    --paper: #f2ead8;
+    --paper-ink: #2b2620;
+    --green: #4f7a5c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .stage{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    padding:24px 20px 32px;
+    position:relative;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .brand-mark{
+    width:34px;height:34px;border-radius:8px;
+    background:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Special Elite',monospace;
+    color:var(--bg);
+    font-size:18px;
+    flex:none;
+  }
+  .brand-text{
+    font-family:'Special Elite',monospace;
+    font-size:20px;
+    letter-spacing:0.5px;
+  }
+  .brand-text span{color:var(--gold);}
+  h1{font-family:'Special Elite',monospace; font-size:22px; font-weight:400; margin:0 0 6px; letter-spacing:0.3px;}
+  h2{font-family:'Special Elite',monospace; font-size:17px; font-weight:400; margin:0 0 4px;}
+  p.sub{color:var(--muted); font-size:14px; line-height:1.5; margin:0 0 20px;}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:16px;
+  }
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;
+    padding:15px 18px;
+    border-radius:12px;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    background:var(--panel-2);
+    color:var(--text);
+    border:1px solid var(--line);
+    transition:transform .12s ease, background .12s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{
+    background:var(--gold);
+    color:#211a0c;
+    border:1px solid var(--gold);
+  }
+  .btn-primary:disabled{
+    background:var(--panel-2);
+    color:var(--muted);
+    border:1px solid var(--line);
+    cursor:not-allowed;
+  }
+  .btn-danger{
+    background:transparent;
+    color:var(--red);
+    border:1px solid rgba(193,68,60,0.4);
+  }
+  .btn-ghost{
+    background:transparent;
+    border:1px solid var(--line);
+  }
+  .row{display:flex; gap:10px;}
+  .grow{flex:1;}
+  input[type=text], input[type=number]{
+    width:100%;
+    padding:13px 14px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    outline:none;
+  }
+  input[type=text]:focus, input[type=number]:focus{
+    border-color:var(--gold-dim);
+  }
+  .player-list{display:flex; flex-direction:column; gap:8px; margin-bottom:16px;}
+  .player-chip{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:15px;
+  }
+  .player-chip .num{
+    color:var(--muted);
+    font-family:'Special Elite',monospace;
+    margin-right:10px;
+    font-size:13px;
+  }
+  .remove-btn{
+    background:none; border:none; color:var(--muted); font-size:18px;
+    cursor:pointer; line-height:1; padding:2px 6px;
+  }
+  .remove-btn:hover{color:var(--red);}
+  .stepper{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:6px 6px 6px 16px;
+  }
+  .stepper .val{font-family:'Special Elite',monospace; font-size:20px; min-width:30px; text-align:center;}
+  .stepper button{
+    width:38px;height:38px;border-radius:8px;border:1px solid var(--line);
+    background:var(--panel); color:var(--text); font-size:18px; cursor:pointer;
+  }
+  .cat-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .cat-chip{
+    padding:11px 10px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    font-size:13.5px;
+    text-align:center;
+    cursor:pointer;
+    color:var(--muted);
+    user-select:none;
+  }
+  .cat-chip.on{
+    border-color:var(--gold);
+    color:var(--gold);
+    background:rgba(212,162,76,0.08);
+  }
+  .toggle-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:4px 2px;
+  }
+  .switch{
+    width:44px;height:26px;border-radius:20px;background:var(--panel-2);
+    border:1px solid var(--line);
+    position:relative; cursor:pointer; flex:none;
+  }
+  .switch.on{background:var(--gold-dim); border-color:var(--gold);}
+  .switch .knob{
+    position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%;
+    background:var(--text); transition:left .15s ease;
+  }
+  .switch.on .knob{left:20px; background:#211a0c;}
+  .label-row{font-size:14px; color:var(--text);}
+  .label-row .desc{font-size:12.5px; color:var(--muted); margin-top:2px;}
+
+  .center-flow{
+    flex:1;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+  }
+  .pass-name{
+    font-family:'Special Elite',monospace;
+    font-size:30px;
+    color:var(--gold);
+    margin:10px 0 6px;
+  }
+  .goofy-tag{
+    font-family:'Special Elite',monospace;
+    font-size:26px;
+    line-height:1.25;
+    letter-spacing:0.5px;
+    color:var(--red);
+    text-transform:uppercase;
+    margin-bottom:14px;
+    transform:rotate(-3deg);
+  }
+  .starter-tag{
+    font-family:'Special Elite',monospace;
+    font-size:16px;
+    color:var(--gold);
+    text-align:center;
+    margin:0 0 4px;
+  }
+  .progress-dots{display:flex; gap:6px; justify-content:center; margin-bottom:22px;}
+  .dot{width:7px;height:7px;border-radius:50%; background:var(--line);}
+  .dot.done{background:var(--gold);}
+  .dot.active{background:var(--text);}
+
+  .folder-wrap{
+    position:relative;
+    width:100%;
+    max-width:320px;
+    height:340px;
+    margin:18px auto 8px;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .content{
+    position:absolute; inset:0;
+    background:var(--paper);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:24px 18px;
+    color:var(--paper-ink);
+  }
+  .cover{
+    position:absolute; inset:0;
+    background:var(--panel-2);
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+    touch-action:none;
+    cursor:grab;
+    transform:translateY(0);
+  }
+  .cover.animate{transition:transform .3s cubic-bezier(.2,.7,.3,1);}
+  .cover .hint-text{
+    color:var(--muted);
+    font-size:13px;
+    padding:0 30px;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .cover .arrow{font-size:22px; color:var(--gold); animation:bounce 1.6s infinite;}
+  @keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+  }
+  .cover .tab{
+    position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+    width:56px; height:6px; border-radius:4px;
+    background:rgba(255,255,255,0.18);
+  }
+  .content .role-label{
+    font-family:'Special Elite',monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:rgba(43,38,32,0.55);
+    margin-bottom:10px;
+  }
+  .content .secret-word{
+    font-family:'Special Elite',monospace;
+    font-size:30px;
+    line-height:1.25;
+    word-break:break-word;
+  }
+  .content .category-tag{
+    margin-top:14px;
+    font-size:12.5px;
+    color:rgba(43,38,32,0.6);
+  }
+  .stamp{
+    font-family:'Special Elite',monospace;
+    font-size:26px;
+    color:var(--red);
+    border:3px solid var(--red);
+    border-radius:8px;
+    padding:6px 16px;
+    transform:rotate(-8deg);
+    letter-spacing:1px;
+    opacity:0;
+  }
+  .content.revealed .stamp{
+    animation:stampin .35s ease forwards .05s;
+  }
+  @keyframes stampin{
+    0%{opacity:0; transform:rotate(-8deg) scale(1.6);}
+    70%{opacity:1; transform:rotate(-8deg) scale(0.92);}
+    100%{opacity:1; transform:rotate(-8deg) scale(1);}
+  }
+  .reveal-note{color:var(--muted); font-size:13px; margin-top:16px; min-height:18px;}
+
+  .timer-circle{
+    width:220px; height:220px;
+    display:flex; align-items:center; justify-content:center;
+    margin:20px auto;
+    position:relative;
+  }
+  .timer-circle svg{
+    position:absolute; inset:0; transform:rotate(-90deg);
+  }
+  .timer-ring-track{ stroke:var(--panel-2); }
+  .timer-ring-progress{
+    stroke:var(--orange);
+    stroke-linecap:round;
+    transition:stroke-dashoffset 1s linear, stroke .3s ease;
+  }
+  .timer-ring-progress.danger{ stroke:var(--red); }
+    position:relative;
+  }
+  .timer-circle .time{
+    font-family:'Special Elite',monospace;
+    font-size:42px;
+  }
+  .results-list{display:flex; flex-direction:column; gap:8px; margin:16px 0 20px;}
+  .result-row{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+  }
+  .result-row.imp{border-color:rgba(193,68,60,0.5);}
+  .result-role{
+    font-size:12px;
+    font-family:'Special Elite',monospace;
+    color:var(--muted);
+  }
+  .result-row.imp .result-role{color:var(--red);}
+  .footer-space{height:4px;}
+  .bottom-actions{display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:18px;}
+  .word-reveal-box{
+    background:var(--panel-2); border:1px solid var(--line); border-radius:12px;
+    padding:16px; text-align:center; margin-bottom:16px;
+  }
+  .word-reveal-box .w{font-family:'Special Elite',monospace; font-size:24px; color:var(--gold);}
+  .small-note{font-size:12px; color:var(--muted); text-align:center; margin-top:10px;}
+  ::selection{background:var(--gold); color:#211a0c;}
+</style>
+</head>
+<body>
+<div id="app" class="stage"></div>
+
+<script>
+const CATEGORIES = {
+  essen: { label: "Essen & Trinken", words: [
+    {w:"Pizza",h:"Ofen"},{w:"Döner",h:"Spieß"},{w:"Currywurst",h:"Imbiss"},{w:"Sushi",h:"Reis"},
+    {w:"Schnitzel",h:"Panade"},{w:"Erdbeere",h:"rot"},{w:"Kaffee",h:"wach"},{w:"Käsekuchen",h:"cremig"},
+    {w:"Popcorn",h:"Kino"},{w:"Spaghetti",h:"Nudeln"},{w:"Honig",h:"Biene"},{w:"Brezel",h:"salzig"},
+    {w:"Glühwein",h:"Weihnachtsmarkt"},{w:"Avocado",h:"grün"},{w:"Pommes",h:"frittiert"},
+    {w:"Burger",h:"Brötchen"},{w:"Falafel",h:"Kichererbsen"},{w:"Tacos",h:"Mexiko"},{w:"Ramen",h:"Brühe"},
+    {w:"Pfannkuchen",h:"Pfanne"},{w:"Waffel",h:"Herzform"},{w:"Schokolade",h:"süß"},{w:"Karamell",h:"klebrig"},
+    {w:"Zimtschnecke",h:"Gewürz"},{w:"Baguette",h:"Frankreich"},{w:"Croissant",h:"Butterteig"},{w:"Marmelade",h:"Brotaufstrich"},
+    {w:"Butter",h:"streichen"},{w:"Käse",h:"Milch"},{w:"Joghurt",h:"Becher"},{w:"Müsli",h:"Frühstück"},
+    {w:"Smoothie",h:"Mixer"},{w:"Limonade",h:"spritzig"},{w:"Tee",h:"Beutel"},{w:"Kakao",h:"heiß"},
+    {w:"Wassermelone",h:"Kerne"},{w:"Banane",h:"gelb"},{w:"Ananas",h:"stachelig"},{w:"Kiwi",h:"haarig"},
+    {w:"Traube",h:"Rebe"},{w:"Kirsche",h:"Stiel"},{w:"Zitrone",h:"sauer"},{w:"Ketchup",h:"Flasche"},
+    {w:"Senf",h:"scharf"},{w:"Mayonnaise",h:"weiß"},{w:"Kartoffelsalat",h:"Grillfest"},{w:"Gulasch",h:"Paprika"},
+    {w:"Lasagne",h:"Schichten"},{w:"Risotto",h:"Parmesan"},{w:"Paella",h:"Safran"}
+  ]},
+  tiere: { label: "Tiere", words: [
+    {w:"Elefant",h:"Rüssel"},{w:"Pinguin",h:"Frack"},{w:"Löwe",h:"Mähne"},{w:"Delfin",h:"Meer"},
+    {w:"Eichhörnchen",h:"Nuss"},{w:"Krake",h:"Tentakel"},{w:"Flamingo",h:"pink"},{w:"Igel",h:"Stacheln"},
+    {w:"Hai",h:"Flosse"},{w:"Känguru",h:"Beutel"},{w:"Fledermaus",h:"Höhle"},{w:"Waschbär",h:"Maske"},
+    {w:"Chamäleon",h:"Farbwechsel"},{w:"Otter",h:"Fell"},{w:"Pfau",h:"Federn"},
+    {w:"Giraffe",h:"Hals"},{w:"Zebra",h:"Streifen"},{w:"Nashorn",h:"Horn"},{w:"Nilpferd",h:"Fluss"},
+    {w:"Gorilla",h:"Brust"},{w:"Schimpanse",h:"Baum"},{w:"Koala",h:"Eukalyptus"},{w:"Panda",h:"Bambus"},
+    {w:"Tiger",h:"orange"},{w:"Leopard",h:"Flecken"},{w:"Wolf",h:"Rudel"},{w:"Fuchs",h:"schlau"},
+    {w:"Bär",h:"Winterschlaf"},{w:"Hase",h:"Löffel"},{w:"Reh",h:"Wald"},{w:"Hirsch",h:"Geweih"},
+    {w:"Wildschwein",h:"Borsten"},{w:"Frosch",h:"quaken"},{w:"Schildkröte",h:"Panzer"},{w:"Schlange",h:"züngeln"},
+    {w:"Eidechse",h:"Schwanz"},{w:"Spinne",h:"Netz"},{w:"Biene",h:"Stachel"},{w:"Schmetterling",h:"Kokon"},
+    {w:"Marienkäfer",h:"Punkte"},{w:"Ameise",h:"Kolonie"},{w:"Qualle",h:"durchsichtig"},{w:"Seepferdchen",h:"aufrecht"},
+    {w:"Wal",h:"Fontäne"},{w:"Robbe",h:"Eis"},{w:"Papagei",h:"bunt"},{w:"Adler",h:"Krallen"},
+    {w:"Eule",h:"nachtaktiv"},{w:"Storch",h:"Schnabel"},{w:"Kolibri",h:"schweben"}
+  ]},
+  berufe: { label: "Berufe", words: [
+    {w:"Feuerwehrmann",h:"Schlauch"},{w:"Zahnarzt",h:"Bohrer"},{w:"Pilot",h:"Cockpit"},{w:"Bäcker",h:"Ofen"},
+    {w:"Anwalt",h:"Gericht"},{w:"Friseur",h:"Schere"},{w:"Bauer",h:"Traktor"},{w:"Lehrer",h:"Tafel"},
+    {w:"Koch",h:"Herd"},{w:"Polizist",h:"Uniform"},{w:"Elektriker",h:"Kabel"},{w:"Gärtner",h:"Schaufel"},
+    {w:"Fotograf",h:"Kamera"},{w:"Krankenschwester",h:"Spritze"},{w:"DJ",h:"Kopfhörer"},
+    {w:"Arzt",h:"Stethoskop"},{w:"Apotheker",h:"Tabletten"},{w:"Ingenieur",h:"Konstruktion"},{w:"Architekt",h:"Bauplan"},
+    {w:"Journalist",h:"Notizblock"},{w:"Schauspieler",h:"Bühne"},{w:"Musiker",h:"Note"},{w:"Maler",h:"Pinsel"},
+    {w:"Schreiner",h:"Holz"},{w:"Klempner",h:"Rohr"},{w:"Mechaniker",h:"Werkstatt"},{w:"Kellner",h:"Tablett"},
+    {w:"Verkäufer",h:"Regal"},{w:"Kassierer",h:"Kasse"},{w:"Reiseleiter",h:"Gruppe"},{w:"Bibliothekar",h:"Bücher"},
+    {w:"Richter",h:"Hammer"},{w:"Notar",h:"Siegel"},{w:"Steuerberater",h:"Formular"},{w:"Programmierer",h:"Code"},
+    {w:"Designer",h:"Layout"},{w:"Bergführer",h:"Seil"},{w:"Zoowärter",h:"Käfig"},{w:"Astronaut",h:"Rakete"},
+    {w:"Wissenschaftler",h:"Labor"},{w:"Detektiv",h:"Lupe"},{w:"Priester",h:"Kirche"},{w:"Soldat",h:"Kaserne"},
+    {w:"Pfleger",h:"Station"},{w:"Tierarzt",h:"Haustier"},{w:"Metzger",h:"Fleisch"},{w:"Winzer",h:"Trauben"},
+    {w:"Fischer",h:"Netz"},{w:"Postbote",h:"Brief"},{w:"Müllmann",h:"Tonne"}
+  ]},
+  orte: { label: "Orte & Länder", words: [
+    {w:"Paris",h:"Eiffelturm"},{w:"Sahara",h:"Sand"},{w:"Island",h:"Vulkan"},{w:"Venedig",h:"Gondel"},
+    {w:"Amazonas",h:"Regenwald"},{w:"New York",h:"Wolkenkratzer"},{w:"Bali",h:"Insel"},{w:"Alpen",h:"Berge"},
+    {w:"Tokio",h:"Neonlichter"},{w:"Toskana",h:"Wein"},{w:"Norwegen",h:"Fjord"},{w:"Marokko",h:"Basar"},
+    {w:"Hawaii",h:"Surfen"},{w:"Berlin",h:"Hauptstadt"},{w:"Antarktis",h:"Eis"},
+    {w:"London",h:"Big Ben"},{w:"Rom",h:"Kolosseum"},{w:"Athen",h:"Akropolis"},{w:"Kairo",h:"Pyramiden"},
+    {w:"Dubai",h:"Wüste"},{w:"Sydney",h:"Oper"},{w:"Rio de Janeiro",h:"Christus"},{w:"Peking",h:"Mauer"},
+    {w:"Moskau",h:"Kreml"},{w:"Barcelona",h:"Gaudí"},{w:"Amsterdam",h:"Grachten"},{w:"Prag",h:"Karlsbrücke"},
+    {w:"Wien",h:"Walzer"},{w:"Istanbul",h:"Bosporus"},{w:"Los Angeles",h:"Hollywood"},{w:"Mexiko-Stadt",h:"Azteken"},
+    {w:"Buenos Aires",h:"Tango"},{w:"Kapstadt",h:"Tafelberg"},{w:"Singapur",h:"Hafen"},{w:"Bangkok",h:"Tempel"},
+    {w:"Seoul",h:"K-Pop"},{w:"Lissabon",h:"Straßenbahn"},{w:"Dublin",h:"Guinness"},{w:"Kopenhagen",h:"Fahrrad"},
+    {w:"Stockholm",h:"Schären"},{w:"Helsinki",h:"Sauna"},{w:"Warschau",h:"Wiederaufbau"},{w:"Budapest",h:"Thermalbad"},
+    {w:"Zürich",h:"Banken"},{w:"Brüssel",h:"Waffeln"},{w:"Malediven",h:"Atoll"},{w:"Seychellen",h:"Granitfelsen"},
+    {w:"Karibik",h:"Piraten"},{w:"Grönland",h:"Eisberg"},{w:"Galapagos",h:"Schildkröte"}
+  ]},
+  filme: { label: "Filme & Serien", words: [
+    {w:"Titanic",h:"Eisberg"},{w:"Matrix",h:"Pille"},{w:"Shrek",h:"Sumpf"},{w:"Batman",h:"Fledermaus"},
+    {w:"Avatar",h:"blau"},{w:"Friends",h:"Couch"},{w:"Jurassic Park",h:"Dinosaurier"},{w:"Star Wars",h:"Laserschwert"},
+    {w:"Toy Story",h:"Spielzeug"},{w:"Frozen",h:"Eis"},{w:"Squid Game",h:"Tintenfisch"},{w:"Harry Potter",h:"Zauberstab"},
+    {w:"Der Pate",h:"Mafia"},{w:"Joker",h:"Clown"},{w:"Inception",h:"Traum"},
+    {w:"Spiderman",h:"Netz"},{w:"Ironman",h:"Rüstung"},{w:"Herr der Ringe",h:"Hobbit"},{w:"Fluch der Karibik",h:"Piraten"},
+    {w:"Findet Nemo",h:"Clownfisch"},{w:"Die Simpsons",h:"gelb"},{w:"Breaking Bad",h:"Chemie"},{w:"Game of Thrones",h:"Thron"},
+    {w:"Stranger Things",h:"Fahrrad"},{w:"The Office",h:"Büro"},{w:"Peaky Blinders",h:"Mütze"},{w:"La Casa de Papel",h:"Maske"},
+    {w:"Dark",h:"Zeitreise"},{w:"Narcos",h:"Kartell"},{w:"The Crown",h:"Königin"},{w:"Grey's Anatomy",h:"Krankenhaus"},
+    {w:"Vikings",h:"Axt"},{w:"Sherlock",h:"Lupe"},{w:"Black Mirror",h:"Technologie"},{w:"Rick and Morty",h:"Portal"},
+    {w:"SpongeBob",h:"Ananas"},{w:"Minions",h:"Banane"},{w:"Zootopia",h:"Hase"},{w:"Coco",h:"Totenkopf"},
+    {w:"Ratatouille",h:"Ratte"},{w:"Kung Fu Panda",h:"Bambus"},{w:"Alien",h:"Xenomorph"},{w:"Terminator",h:"Roboter"},
+    {w:"Rocky",h:"Boxring"},{w:"Gladiator",h:"Arena"},{w:"Interstellar",h:"Wurmloch"},{w:"Whiplash",h:"Schlagzeug"},
+    {w:"La La Land",h:"Jazz"},{w:"Parasite",h:"Treppe"},{w:"Casino Royale",h:"Poker"}
+  ]},
+  sport: { label: "Sport", words: [
+    {w:"Fußball",h:"Tor"},{w:"Tennis",h:"Schläger"},{w:"Skifahren",h:"Schnee"},{w:"Boxen",h:"Handschuhe"},
+    {w:"Schwimmen",h:"Wasser"},{w:"Basketball",h:"Korb"},{w:"Klettern",h:"Seil"},{w:"Surfen",h:"Welle"},
+    {w:"Volleyball",h:"Netz"},{w:"Golf",h:"Loch"},{w:"Formel 1",h:"Rennstrecke"},{w:"Yoga",h:"Matte"},
+    {w:"Tischtennis",h:"Schläger"},{w:"Rudern",h:"Boot"},{w:"Bowling",h:"Kegel"},
+    {w:"Handball",h:"Wurf"},{w:"Eishockey",h:"Puck"},{w:"Leichtathletik",h:"Stadion"},{w:"Turnen",h:"Reck"},
+    {w:"Judo",h:"Gürtel"},{w:"Karate",h:"Handkante"},{w:"Taekwondo",h:"Tritt"},{w:"Fechten",h:"Degen"},
+    {w:"Reiten",h:"Sattel"},{w:"Segeln",h:"Wind"},{w:"Rennrad",h:"Helm"},{w:"Mountainbike",h:"Gelände"},
+    {w:"Skateboard",h:"Rampe"},{w:"Snowboard",h:"Piste"},{w:"Eiskunstlauf",h:"Pirouette"},{w:"Biathlon",h:"Gewehr"},
+    {w:"Rugby",h:"Tackle"},{w:"Cricket",h:"Schlagholz"},{w:"Baseball",h:"Homerun"},{w:"American Football",h:"Touchdown"},
+    {w:"Darts",h:"Pfeil"},{w:"Squash",h:"Wand"},{w:"Badminton",h:"Federball"},{w:"Triathlon",h:"Wechselzone"},
+    {w:"Marathon",h:"Strecke"},{w:"Klettersteig",h:"Fels"},{w:"Bogenschießen",h:"Zielscheibe"},{w:"Gewichtheben",h:"Hantel"},
+    {w:"Crossfit",h:"Fitnessstudio"},{w:"Wasserball",h:"Becken"},{w:"Synchronschwimmen",h:"Nasenklammer"},{w:"Curling",h:"Besen"},
+    {w:"Rennrodeln",h:"Schlitten"},{w:"Skispringen",h:"Schanze"},{w:"Speedskating",h:"Kufen"}
+  ]},
+  gegenstaende: { label: "Alltagsgegenstände", words: [
+    {w:"Regenschirm",h:"Regen"},{w:"Kopfhörer",h:"Musik"},{w:"Wecker",h:"Klingeln"},{w:"Zahnbürste",h:"Zähne"},
+    {w:"Rucksack",h:"Schule"},{w:"Kerze",h:"Flamme"},{w:"Spiegel",h:"Reflexion"},{w:"Schere",h:"schneiden"},
+    {w:"Taschenlampe",h:"Dunkelheit"},{w:"Kissen",h:"weich"},{w:"Schlüsselbund",h:"Tür"},{w:"Feuerzeug",h:"Flamme"},
+    {w:"Portemonnaie",h:"Geld"},{w:"Brille",h:"sehen"},{w:"Föhn",h:"Haare"},{w:"Handseife",h:"sauber"},
+    {w:"Zahnpasta",h:"Tube"},{w:"Handtuch",h:"trocknen"},{w:"Kamm",h:"Zinken"},{w:"Bürste",h:"Borsten"},
+    {w:"Nagelschere",h:"Maniküre"},{w:"Rasierer",h:"Klinge"},{w:"Deo",h:"Sprühen"},{w:"Parfüm",h:"Duft"},
+    {w:"Uhr",h:"Zeiger"},{w:"Ring",h:"Finger"},{w:"Kette",h:"Hals"},{w:"Ohrringe",h:"Ohrläppchen"},
+    {w:"Gürtel",h:"Schnalle"},{w:"Handschuhe",h:"warm"},{w:"Mütze",h:"Kopf"},{w:"Schal",h:"Winter"},
+    {w:"Socken",h:"Füße"},{w:"Hausschuhe",h:"gemütlich"},{w:"Bügeleisen",h:"glatt"},{w:"Staubsauger",h:"saugen"},
+    {w:"Besen",h:"fegen"},{w:"Eimer",h:"Wasser"},{w:"Schwamm",h:"abwaschen"},{w:"Waschmittel",h:"Wäsche"},
+    {w:"Toilettenpapier",h:"Rolle"},{w:"Klebeband",h:"kleben"},{w:"Büroklammer",h:"Papier"},{w:"Locher",h:"Löcher"},
+    {w:"Stift",h:"schreiben"},{w:"Radiergummi",h:"löschen"},{w:"Lineal",h:"gerade"},{w:"Taschenrechner",h:"Zahlen"},
+    {w:"Akku",h:"aufladen"},{w:"Ladekabel",h:"Stecker"}
+  ]},
+  urlaub: { label: "Urlaub & Reisen", words: [
+    {w:"Strand",h:"Sand"},{w:"Koffer",h:"packen"},{w:"Flughafen",h:"Gate"},{w:"Camping",h:"Zelt"},
+    {w:"Kreuzfahrt",h:"Schiff"},{w:"Reisepass",h:"Grenze"},{w:"Sonnenbrand",h:"rot"},{w:"Hotel",h:"Zimmer"},
+    {w:"Sandburg",h:"Eimer"},{w:"Wanderweg",h:"Berge"},{w:"Zeltplatz",h:"Lagerfeuer"},{w:"Souvenir",h:"Andenken"},
+    {w:"Sonnencreme",h:"UV"},{w:"Bergsteigen",h:"Seil"},{w:"Roadtrip",h:"Auto"},
+    {w:"Visum",h:"Stempel"},{w:"Gepäck",h:"Band"},{w:"Boardkarte",h:"Scan"},{w:"Zoll",h:"Kontrolle"},
+    {w:"Rucksackreise",h:"günstig"},{w:"Jugendherberge",h:"Schlafsaal"},{w:"Ferienwohnung",h:"Küche"},{w:"Reiseführer",h:"Buch"},
+    {w:"Landkarte",h:"falten"},{w:"Kompass",h:"Nadel"},{w:"Sightseeing",h:"Foto"},{w:"Strandkorb",h:"Nordsee"},
+    {w:"Liegestuhl",h:"entspannen"},{w:"Palme",h:"Schatten"},{w:"Cocktail",h:"Schirmchen"},{w:"Schnorcheln",h:"Maske"},
+    {w:"Tauchen",h:"Flasche"},{w:"Wasserfall",h:"rauschen"},{w:"Vulkan",h:"Lava"},{w:"Wüste",h:"Dünen"},
+    {w:"Dschungel",h:"dicht"},{w:"Safari",h:"Jeep"},{w:"Gletscher",h:"schmelzen"},{w:"Skiurlaub",h:"Hütte"},
+    {w:"Après-Ski",h:"Musik"},{w:"Städtereise",h:"Museum"},{w:"Kulturtrip",h:"Geschichte"},{w:"Backpacking",h:"leicht"},
+    {w:"Weltreise",h:"rund um"},{w:"Fernweh",h:"Sehnsucht"},{w:"Umbuchung",h:"Gebühr"},{w:"Verspätung",h:"warten"},
+    {w:"Zwischenstopp",h:"Layover"},{w:"Duty-Free",h:"zollfrei"},{w:"Trolley",h:"Rollen"}
+  ]},
+  promis: { label: "Promis", words: [
+    {w:"Sabrina Carpenter",h:"Espresso"},{w:"Taylor Swift",h:"Swiftie"},{w:"Beyoncé",h:"Queen B"},{w:"Rihanna",h:"Fenty"},
+    {w:"Ariana Grande",h:"Ponytail"},{w:"Billie Eilish",h:"Oversized"},{w:"Ed Sheeran",h:"Gitarre"},{w:"Justin Bieber",h:"Baby"},
+    {w:"Bruno Mars",h:"24K"},{w:"Adele",h:"Hello"},{w:"Dua Lipa",h:"Levitating"},{w:"The Weeknd",h:"Blinding Lights"},
+    {w:"Drake",h:"Toronto"},{w:"Kanye West",h:"Yeezy"},{w:"Lady Gaga",h:"Poker Face"},{w:"Katy Perry",h:"Firework"},
+    {w:"Miley Cyrus",h:"Wrecking Ball"},{w:"Shakira",h:"Hüften"},{w:"Harry Styles",h:"One Direction"},{w:"Olivia Rodrigo",h:"Drivers License"},
+    {w:"Doja Cat",h:"Katze"},{w:"Post Malone",h:"Tattoos"},{w:"Ozzy Osbourne",h:"Black Sabbath"},{w:"Elton John",h:"Klavier"},
+    {w:"Freddie Mercury",h:"Queen"},{w:"Michael Jackson",h:"Moonwalk"},{w:"Madonna",h:"Like a Virgin"},{w:"Whitney Houston",h:"I Will Always Love You"},
+    {w:"Elvis Presley",h:"Rock'n'Roll"},{w:"Cristiano Ronaldo",h:"Siuu"},{w:"Lionel Messi",h:"Barcelona"},{w:"Neymar",h:"Brasilien"},
+    {w:"Kylian Mbappé",h:"PSG"},{w:"Erling Haaland",h:"Norwegen"},{w:"Serena Williams",h:"Tennis"},{w:"Roger Federer",h:"Schweiz"},
+    {w:"Usain Bolt",h:"Sprint"},{w:"Michael Jordan",h:"Chicago Bulls"},{w:"LeBron James",h:"Lakers"},{w:"Tom Brady",h:"Football"},
+    {w:"Leonardo DiCaprio",h:"Titanic"},{w:"Brad Pitt",h:"Fight Club"},{w:"Angelina Jolie",h:"Tomb Raider"},{w:"Johnny Depp",h:"Piraten"},
+    {w:"Will Smith",h:"Ohrfeige"},{w:"Tom Cruise",h:"Mission Impossible"},{w:"Robert Downey Jr.",h:"Iron Man"},{w:"Scarlett Johansson",h:"Black Widow"},
+    {w:"Jennifer Lawrence",h:"Hunger Games"},{w:"Emma Watson",h:"Hermine"},{w:"Daniel Radcliffe",h:"Harry Potter"},{w:"Chris Hemsworth",h:"Thor"},
+    {w:"Zendaya",h:"Euphoria"},{w:"Timothée Chalamet",h:"Dune"},{w:"Margot Robbie",h:"Barbie"},{w:"Ryan Gosling",h:"Ken"},
+    {w:"Keanu Reeves",h:"Matrix"},{w:"Dwayne Johnson",h:"The Rock"},{w:"Arnold Schwarzenegger",h:"Terminator"},{w:"Sylvester Stallone",h:"Rocky"},
+    {w:"Morgan Freeman",h:"Stimme"},{w:"Meryl Streep",h:"Oscar"},{w:"Denzel Washington",h:"Training Day"},{w:"Samuel L. Jackson",h:"Pulp Fiction"},
+    {w:"Quentin Tarantino",h:"Regisseur"},{w:"Steven Spielberg",h:"E.T."},{w:"Christopher Nolan",h:"Batman"},{w:"James Cameron",h:"Avatar"},
+    {w:"Walt Disney",h:"Micky Maus"},{w:"Oprah Winfrey",h:"Talkshow"},{w:"Ellen DeGeneres",h:"Comedy"},{w:"Barack Obama",h:"USA"},
+    {w:"Elon Musk",h:"Tesla"},{w:"Jeff Bezos",h:"Amazon"},{w:"Bill Gates",h:"Microsoft"},{w:"Mark Zuckerberg",h:"Facebook"},
+    {w:"Steve Jobs",h:"Apple"},{w:"Albert Einstein",h:"Relativität"},{w:"Pablo Picasso",h:"Kubismus"},{w:"Vincent van Gogh",h:"Ohr"},
+    {w:"Leonardo da Vinci",h:"Mona Lisa"},{w:"William Shakespeare",h:"Theater"},{w:"Mahatma Gandhi",h:"Gewaltlosigkeit"},{w:"Nelson Mandela",h:"Südafrika"},
+    {w:"Cleopatra",h:"Ägypten"},{w:"Napoleon Bonaparte",h:"Frankreich"},{w:"Queen Elizabeth II",h:"Krone"},{w:"König Charles",h:"Prinz von Wales"},
+    {w:"Prinzessin Diana",h:"Wales"},{w:"Greta Thunberg",h:"Klimastreik"},{w:"Zinedine Zidane",h:"Kopfstoß"},{w:"Diego Maradona",h:"Hand Gottes"},
+    {w:"Pelé",h:"Fußballkönig"},{w:"Muhammad Ali",h:"Boxen"},{w:"Mike Tyson",h:"Boxring"},{w:"Simone Biles",h:"Turnen"},
+    {w:"Michael Phelps",h:"Schwimmen"},{w:"Novak Djokovic",h:"Serbien"},{w:"Rafael Nadal",h:"Sandplatz"},{w:"Kim Kardashian",h:"Reality-TV"}
+  ]}
+};
+
+let state = {
+  screen: "setup",
+  players: [],
+  numImposters: 1,
+  categories: Object.fromEntries(Object.keys(CATEGORIES).map(k => [k, true])),
+  imposterKnowsCategory: true,
+  discussionSeconds: 180,
+  roles: [],
+  starterIndex: 0,
+  word: "",
+  hint: "",
+  categoryLabel: "",
+  revealIndex: 0,
+  revealStage: "waiting",
+  timerRemaining: 180,
+  timerRunning: false,
+  timerInterval: null
+};
+
+const app = document.getElementById("app");
+
+function render(){
+  if(state.screen === "setup") renderSetup();
+  else if(state.screen === "settings") renderSettings();
+  else if(state.screen === "pass") renderPass();
+  else if(state.screen === "discussion") renderDiscussion();
+  else if(state.screen === "results") renderResults();
+}
+
+function brandHeader(){
+  return `<div class="brand">
+    <div class="brand-mark">I</div>
+    <div class="brand-text">IMPO<span>STER</span></div>
+  </div>`;
+}
+
+function renderSetup(){
+  app.innerHTML = `
+    ${brandHeader()}
+    <h1>Spieler hinzufügen</h1>
+    <p class="sub">Mindestens 3 Spieler.</p>
+    <div class="row" style="margin-bottom:16px;">
+      <input type="text" id="playerInput" class="grow" placeholder="Name eingeben" maxlength="16">
+      <button class="btn btn-primary" style="width:auto; padding:13px 18px;" id="addPlayerBtn">+</button>
+    </div>
+    <div class="player-list" id="playerList"></div>
+    <div class="bottom-actions">
+      <button class="btn btn-primary" id="toSettingsBtn" disabled>Weiter</button>
+    </div>
+  `;
+  const list = document.getElementById("playerList");
+  state.players.forEach((name, i) => {
+    const row = document.createElement("div");
+    row.className = "player-chip";
+    row.innerHTML = `<span><span class="num">${String(i+1).padStart(2,"0")}</span>${escapeHtml(name)}</span>
+      <button class="remove-btn" data-i="${i}">✕</button>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll(".remove-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.players.splice(Number(btn.dataset.i), 1);
+      render();
+    });
+  });
+  const input = document.getElementById("playerInput");
+  const addBtn = document.getElementById("addPlayerBtn");
+  function addPlayer(){
+    const v = input.value.trim();
+    if(!v) return;
+    state.players.push(v);
+    input.value = "";
+    render();
+    setTimeout(() => document.getElementById("playerInput").focus(), 30);
+  }
+  addBtn.addEventListener("click", addPlayer);
+  input.addEventListener("keydown", e => { if(e.key === "Enter") addPlayer(); });
+
+  const nextBtn = document.getElementById("toSettingsBtn");
+  nextBtn.disabled = state.players.length < 3;
+  nextBtn.addEventListener("click", () => {
+    if(state.numImposters >= state.players.length) state.numImposters = 1;
+    state.screen = "settings";
+    render();
+  });
+}
+
+function renderSettings(){
+  const maxImp = Math.max(1, Math.floor(state.players.length / 2));
+  app.innerHTML = `
+    ${brandHeader()}
+    <h1>Spieleinstellungen</h1>
+    <p class="sub">${state.players.length} Spieler ausgewählt.</p>
+
+    <div class="card">
+      <h2>Anzahl Imposter</h2>
+      <div class="stepper" style="margin-top:10px;">
+        <button id="impMinus">−</button>
+        <span class="val" id="impVal">${state.numImposters}</span>
+        <button id="impPlus">+</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Kategorien</h2>
+      <p class="sub" style="margin-bottom:10px;">Mindestens eine auswählen.</p>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="toggle-row">
+        <div class="label-row">Imposter bekommt Hinweis
+          <div class="desc">Ein Tipp statt komplett blind zu raten</div>
+        </div>
+        <div class="switch ${state.imposterKnowsCategory ? "on":""}" id="hintSwitch"><div class="knob"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Diskussionszeit</h2>
+      <div class="stepper" style="margin-top:10px;">
+        <button id="timeMinus">−</button>
+        <span class="val" id="timeVal">${Math.round(state.discussionSeconds/60)} min</span>
+        <button id="timePlus">+</button>
+      </div>
+    </div>
+
+    <div class="bottom-actions">
+      <button class="btn btn-primary" id="startBtn">Spiel starten</button>
+      <button class="btn btn-ghost" id="backBtn">Zurück</button>
+    </div>
+  `;
+
+  document.getElementById("impMinus").addEventListener("click", () => {
+    state.numImposters = Math.max(1, state.numImposters - 1);
+    renderSettings();
+  });
+  document.getElementById("impPlus").addEventListener("click", () => {
+    state.numImposters = Math.min(maxImp, state.numImposters + 1);
+    renderSettings();
+  });
+
+  const grid = document.getElementById("catGrid");
+  Object.entries(CATEGORIES).forEach(([key, cat]) => {
+    const chip = document.createElement("div");
+    chip.className = "cat-chip" + (state.categories[key] ? " on" : "");
+    chip.textContent = cat.label;
+    chip.addEventListener("click", () => {
+      const activeCount = Object.values(state.categories).filter(Boolean).length;
+      if(state.categories[key] && activeCount === 1) return;
+      state.categories[key] = !state.categories[key];
+      renderSettings();
+    });
+    grid.appendChild(chip);
+  });
+
+  document.getElementById("hintSwitch").addEventListener("click", () => {
+    state.imposterKnowsCategory = !state.imposterKnowsCategory;
+    renderSettings();
+  });
+
+  document.getElementById("timeMinus").addEventListener("click", () => {
+    state.discussionSeconds = Math.max(60, state.discussionSeconds - 30);
+    renderSettings();
+  });
+  document.getElementById("timePlus").addEventListener("click", () => {
+    state.discussionSeconds = Math.min(900, state.discussionSeconds + 30);
+    renderSettings();
+  });
+
+  document.getElementById("backBtn").addEventListener("click", () => {
+    state.screen = "setup";
+    render();
+  });
+  document.getElementById("startBtn").addEventListener("click", startGame);
+}
+
+function startGame(){
+  const activeCats = Object.keys(CATEGORIES).filter(k => state.categories[k]);
+  const catKey = activeCats[Math.floor(Math.random() * activeCats.length)];
+  const cat = CATEGORIES[catKey];
+  const entry = cat.words[Math.floor(Math.random() * cat.words.length)];
+
+  const indices = state.players.map((_, i) => i);
+  shuffle(indices);
+  const impostorSet = new Set(indices.slice(0, state.numImposters));
+
+  state.roles = state.players.map((_, i) => impostorSet.has(i) ? "imposter" : "crew");
+  state.starterIndex = Math.floor(Math.random() * state.players.length);
+  state.word = entry.w;
+  state.hint = entry.h;
+  state.categoryLabel = cat.label;
+  state.revealIndex = 0;
+  state.revealStage = "waiting";
+  state.timerRemaining = state.discussionSeconds;
+  state.timerRunning = false;
+  state.screen = "pass";
+  render();
+}
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function renderPass(){
+  const i = state.revealIndex;
+  const total = state.players.length;
+  const name = state.players[i];
+  const isImposter = state.roles[i] === "imposter";
+
+  let dots = "";
+  for(let d = 0; d < total; d++){
+    let cls = "dot";
+    if(d < i) cls += " done";
+    else if(d === i) cls += " active";
+    dots += `<div class="${cls}"></div>`;
+  }
+
+  app.innerHTML = `
+    ${brandHeader()}
+    <div class="progress-dots">${dots}</div>
+    <div class="center-flow">
+      ${name.trim().toLowerCase() === "goofy" ? `<div class="goofy-tag">Fick dich Goofy</div>` : ""}
+      ${state.revealStage === "waiting" ? `
+        <p class="sub" style="margin-bottom:0;">Gib das Handy weiter an</p>
+        <div class="pass-name">${escapeHtml(name)}</div>
+        <p class="sub">Alle anderen sollen wegschauen.</p>
+      ` : `
+        <p class="sub" style="margin-bottom:0;">Dran ist</p>
+        <div class="pass-name">${escapeHtml(name)}</div>
+      `}
+
+      <div class="folder-wrap" id="folderWrap">
+        <div class="content ${state.revealStage === "revealed" ? "revealed" : ""}" id="content">
+          ${isImposter ? `
+            <div class="role-label">Achtung</div>
+            <div class="stamp">IMPOSTER</div>
+            ${state.imposterKnowsCategory ? `<div class="category-tag">Hinweis: <strong>${escapeHtml(state.hint)}</strong></div>` : `<div class="category-tag">Du bekommst keinen Hinweis.</div>`}
+          ` : `
+            <div class="role-label">Dein Wort</div>
+            <div class="secret-word">${escapeHtml(state.word)}</div>
+            <div class="category-tag">Kategorie: ${escapeHtml(state.categoryLabel)}</div>
+          `}
+        </div>
+        <div class="cover" id="cover">
+          <div class="hint-text">
+            <span>Nach oben wischen<br>um dein Wort zu sehen</span>
+            <span class="arrow">↑</span>
+          </div>
+          <div class="tab"></div>
+        </div>
+      </div>
+      <div class="reveal-note" id="revealNote">${state.revealStage === "revealed" ? "Merk dir alles gut, dann weiter." : ""}</div>
+    </div>
+
+    <div class="bottom-actions">
+      <button class="btn btn-primary" id="mainActionBtn">${state.revealStage === "waiting" ? "Ich bin " + escapeHtml(name) : (i === total - 1 ? "Zur Diskussion" : "Weiter geben")}</button>
+    </div>
+  `;
+
+  const coverEl = document.getElementById("cover");
+  const wrapEl = document.getElementById("folderWrap");
+  const mainBtn = document.getElementById("mainActionBtn");
+  const noteEl = document.getElementById("revealNote");
+
+  mainBtn.addEventListener("click", () => {
+    if(state.revealStage === "waiting"){
+      state.revealStage = "ready";
+      render();
+    } else {
+      if(i === total - 1){
+        state.screen = "discussion";
+      } else {
+        state.revealIndex += 1;
+        state.revealStage = "waiting";
+      }
+      render();
+    }
+  });
+
+  if(state.revealStage === "ready" || state.revealStage === "revealed"){
+    setupDrag(coverEl, wrapEl, noteEl);
+  }
+}
+
+function setupDrag(coverEl, wrapEl, noteEl){
+  const wrapHeight = wrapEl.offsetHeight;
+  let startY = null;
+  let dragging = false;
+  let revealed = state.revealStage === "revealed";
+
+  function setPos(px){
+    coverEl.classList.remove("animate");
+    coverEl.style.transform = `translateY(${px}px)`;
+  }
+  function animateTo(px, cb){
+    coverEl.classList.add("animate");
+    coverEl.style.transform = `translateY(${px}px)`;
+    setTimeout(() => { if(cb) cb(); }, 300);
+  }
+
+  if(revealed){
+    coverEl.style.transform = `translateY(-${wrapHeight}px)`;
+    return;
+  }
+  setPos(0);
+
+  function onDown(e){
+    if(revealed) return;
+    dragging = true;
+    startY = (e.touches ? e.touches[0].clientY : e.clientY);
+  }
+  function onMove(e){
+    if(!dragging || revealed) return;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY);
+    const delta = y - startY;
+    const next = Math.min(0, Math.max(-wrapHeight, delta));
+    setPos(next);
+  }
+  function finishReveal(){
+    revealed = true;
+    state.revealStage = "revealed";
+    animateTo(-wrapHeight, () => {
+      const contentEl = document.getElementById("content");
+      if(contentEl) contentEl.classList.add("revealed");
+    });
+    noteEl.textContent = "Merk dir alles gut, dann weiter.";
+  }
+  function onUp(e){
+    if(!dragging || revealed) return;
+    dragging = false;
+    const y = (e.changedTouches ? e.changedTouches[0].clientY : e.clientY);
+    const delta = y - startY;
+    const finalPos = Math.min(0, Math.max(-wrapHeight, delta));
+    if(finalPos < -wrapHeight * 0.32){
+      finishReveal();
+    } else {
+      animateTo(0);
+    }
+  }
+
+  coverEl.addEventListener("touchstart", onDown, {passive:true});
+  coverEl.addEventListener("touchmove", onMove, {passive:true});
+  coverEl.addEventListener("touchend", onUp);
+  coverEl.addEventListener("mousedown", onDown);
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("mouseup", onUp);
+
+  coverEl.addEventListener("click", () => {
+    if(revealed || dragging) return;
+    finishReveal();
+  });
+}
+
+const TIMER_RADIUS = 95;
+const TIMER_CIRC = 2 * Math.PI * TIMER_RADIUS;
+
+function renderDiscussion(){
+  const mm = Math.floor(state.timerRemaining / 60);
+  const ss = state.timerRemaining % 60;
+  const timeStr = `${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+  const ratio = Math.max(0, Math.min(1, state.timerRemaining / state.discussionSeconds));
+  const offset = TIMER_CIRC * (1 - ratio);
+  const isDanger = state.timerRemaining <= 10 && state.timerRemaining > 0;
+
+  app.innerHTML = `
+    ${brandHeader()}
+    <h1>Diskussionsrunde</h1>
+    <p class="sub" style="margin-bottom:6px;">Beschreibt reihum euer Wort in einem Begriff.</p>
+    <p class="starter-tag">${escapeHtml(state.players[state.starterIndex])} fängt an</p>
+    <div class="timer-circle">
+      <svg viewBox="0 0 220 220" width="220" height="220">
+        <circle class="timer-ring-track" cx="110" cy="110" r="${TIMER_RADIUS}" fill="none" stroke-width="10"/>
+        <circle class="timer-ring-progress${isDanger ? " danger" : ""}" id="timerRing" cx="110" cy="110" r="${TIMER_RADIUS}" fill="none" stroke-width="10"
+          stroke-dasharray="${TIMER_CIRC}" stroke-dashoffset="${offset}"/>
+      </svg>
+      <div class="time" id="timeDisplay">${timeStr}</div>
+    </div>
+    <div class="row" style="max-width:320px; margin:0 auto 8px;">
+      <button class="btn grow" id="timerToggle">${state.timerRunning ? "Pause" : "Start"}</button>
+      <button class="btn grow" id="timerReset">Reset</button>
+    </div>
+    <div class="bottom-actions">
+      <button class="btn btn-primary" id="toResults">Rollen aufdecken</button>
+    </div>
+  `;
+
+  document.getElementById("timerToggle").addEventListener("click", () => {
+    state.timerRunning = !state.timerRunning;
+    if(state.timerRunning) startTimer(); else stopTimer();
+    render();
+  });
+  document.getElementById("timerReset").addEventListener("click", () => {
+    stopTimer();
+    state.timerRemaining = state.discussionSeconds;
+    state.timerRunning = false;
+    render();
+  });
+  document.getElementById("toResults").addEventListener("click", () => {
+    stopTimer();
+    state.screen = "results";
+    render();
+  });
+
+  if(state.timerRunning) startTimer();
+}
+
+function startTimer(){
+  if(state.timerInterval) return;
+  state.timerInterval = setInterval(() => {
+    if(state.timerRemaining <= 0){
+      stopTimer();
+      state.timerRunning = false;
+      render();
+      return;
+    }
+    state.timerRemaining -= 1;
+    const el = document.getElementById("timeDisplay");
+    if(el){
+      const mm = Math.floor(state.timerRemaining / 60);
+      const ss = state.timerRemaining % 60;
+      el.textContent = `${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+    }
+    const ring = document.getElementById("timerRing");
+    if(ring){
+      const ratio = Math.max(0, Math.min(1, state.timerRemaining / state.discussionSeconds));
+      ring.style.strokeDashoffset = TIMER_CIRC * (1 - ratio);
+      ring.classList.toggle("danger", state.timerRemaining <= 10);
+    }
+  }, 1000);
+}
+function stopTimer(){
+  if(state.timerInterval){
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
+function renderResults(){
+  const impCount = state.roles.filter(r => r === "imposter").length;
+  app.innerHTML = `
+    ${brandHeader()}
+    <h1>Auflösung</h1>
+    <div class="word-reveal-box">
+      <div class="small-note" style="margin-top:0;">Das gesuchte Wort war</div>
+      <div class="w">${escapeHtml(state.word)}</div>
+      <div class="small-note">Kategorie: ${escapeHtml(state.categoryLabel)}</div>
+    </div>
+    <p class="sub" style="margin-bottom:8px;">${impCount} Imposter im Spiel:</p>
+    <div class="results-list" id="resultsList"></div>
+    <div class="bottom-actions">
+      <button class="btn btn-primary" id="playAgainBtn">Nochmal spielen (gleiche Spieler)</button>
+      <button class="btn btn-ghost" id="newGameBtn">Neue Spielerliste</button>
+    </div>
+  `;
+  const list = document.getElementById("resultsList");
+  state.players.forEach((name, i) => {
+    const isImp = state.roles[i] === "imposter";
+    const row = document.createElement("div");
+    row.className = "result-row" + (isImp ? " imp" : "");
+    row.innerHTML = `<span>${escapeHtml(name)}</span><span class="result-role">${isImp ? "IMPOSTER" : "MITSPIELER"}</span>`;
+    list.appendChild(row);
+  });
+
+  document.getElementById("playAgainBtn").addEventListener("click", startGame);
+  document.getElementById("newGameBtn").addEventListener("click", () => {
+    state.players = [];
+    state.screen = "setup";
+    render();
+  });
+}
+
+function escapeHtml(str){
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+render();
+</script>
+</body>
+</html>
