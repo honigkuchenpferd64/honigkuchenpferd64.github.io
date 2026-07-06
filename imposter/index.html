@@ -6,7 +6,7 @@
 <title>Imposter – Das Party-Spiel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Fredoka:wght@400;500;600;700&family=Rye&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #14161c;
@@ -22,6 +22,60 @@
     --paper: #f2ead8;
     --paper-ink: #2b2620;
     --green: #4f7a5c;
+    --font-display: 'Special Elite', monospace;
+  }
+  [data-theme="pink"]{
+    --bg: #ffdcef;
+    --panel: #ffffff;
+    --panel-2: #ffe8f5;
+    --line: #ffb6de;
+    --gold: #ff4fa8;
+    --gold-dim: #e0388f;
+    --orange: #ff7ec2;
+    --red: #ff2d78;
+    --text: #6b1345;
+    --muted: #b4638f;
+    --paper: #fff2fa;
+    --paper-ink: #7a1350;
+    --green: #4f7a5c;
+    --font-display: 'Fredoka', sans-serif;
+  }
+  [data-theme="redneck"]{
+    --bg: #12181f;
+    --panel: #1d2a36;
+    --panel-2: #253846;
+    --line: #3d5567;
+    --gold: #ffcc00;
+    --gold-dim: #c79f00;
+    --orange: #ff6a00;
+    --red: #c8102e;
+    --text: #f5f0e2;
+    --muted: #93a7b3;
+    --paper: #ecdfba;
+    --paper-ink: #3b2a13;
+    --green: #4f7a5c;
+    --font-display: 'Rye', serif;
+  }
+  .theme-switch{
+    display:flex; gap:8px; margin-bottom:18px;
+  }
+  .theme-btn{
+    flex:1;
+    padding:9px 6px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    text-align:center;
+  }
+  .theme-btn.active{
+    border-color:var(--gold);
+    color:var(--gold);
+    background:rgba(212,162,76,0.1);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -52,19 +106,19 @@
     width:34px;height:34px;border-radius:8px;
     background:var(--gold);
     display:flex;align-items:center;justify-content:center;
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     color:var(--bg);
     font-size:18px;
     flex:none;
   }
   .brand-text{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:20px;
     letter-spacing:0.5px;
   }
   .brand-text span{color:var(--gold);}
-  h1{font-family:'Special Elite',monospace; font-size:22px; font-weight:400; margin:0 0 6px; letter-spacing:0.3px;}
-  h2{font-family:'Special Elite',monospace; font-size:17px; font-weight:400; margin:0 0 4px;}
+  h1{font-family:var(--font-display); font-size:22px; font-weight:400; margin:0 0 6px; letter-spacing:0.3px;}
+  h2{font-family:var(--font-display); font-size:17px; font-weight:400; margin:0 0 4px;}
   p.sub{color:var(--muted); font-size:14px; line-height:1.5; margin:0 0 20px;}
   .card{
     background:var(--panel);
@@ -136,7 +190,7 @@
   }
   .player-chip .num{
     color:var(--muted);
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     margin-right:10px;
     font-size:13px;
   }
@@ -152,7 +206,7 @@
     border-radius:10px;
     padding:6px 6px 6px 16px;
   }
-  .stepper .val{font-family:'Special Elite',monospace; font-size:20px; min-width:30px; text-align:center;}
+  .stepper .val{font-family:var(--font-display); font-size:20px; min-width:30px; text-align:center;}
   .stepper button{
     width:38px;height:38px;border-radius:8px;border:1px solid var(--line);
     background:var(--panel); color:var(--text); font-size:18px; cursor:pointer;
@@ -198,13 +252,13 @@
     text-align:center;
   }
   .pass-name{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:30px;
     color:var(--gold);
     margin:10px 0 6px;
   }
   .goofy-tag{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:26px;
     line-height:1.25;
     letter-spacing:0.5px;
@@ -214,7 +268,7 @@
     transform:rotate(-3deg);
   }
   .starter-tag{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:16px;
     color:var(--gold);
     text-align:center;
@@ -269,7 +323,7 @@
     background:rgba(255,255,255,0.18);
   }
   .content .role-label{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:12px;
     letter-spacing:1.5px;
     text-transform:uppercase;
@@ -277,7 +331,7 @@
     margin-bottom:10px;
   }
   .content .secret-word{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:30px;
     line-height:1.25;
     word-break:break-word;
@@ -288,7 +342,7 @@
     color:rgba(43,38,32,0.6);
   }
   .stamp{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:26px;
     color:var(--red);
     border:3px solid var(--red);
@@ -324,10 +378,8 @@
     transition:stroke-dashoffset 1s linear, stroke .3s ease;
   }
   .timer-ring-progress.danger{ stroke:var(--red); }
-    position:relative;
-  }
   .timer-circle .time{
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     font-size:42px;
   }
   .results-list{display:flex; flex-direction:column; gap:8px; margin:16px 0 20px;}
@@ -341,7 +393,7 @@
   .result-row.imp{border-color:rgba(193,68,60,0.5);}
   .result-role{
     font-size:12px;
-    font-family:'Special Elite',monospace;
+    font-family:var(--font-display);
     color:var(--muted);
   }
   .result-row.imp .result-role{color:var(--red);}
@@ -351,7 +403,7 @@
     background:var(--panel-2); border:1px solid var(--line); border-radius:12px;
     padding:16px; text-align:center; margin-bottom:16px;
   }
-  .word-reveal-box .w{font-family:'Special Elite',monospace; font-size:24px; color:var(--gold);}
+  .word-reveal-box .w{font-family:var(--font-display); font-size:24px; color:var(--gold);}
   .small-note{font-size:12px; color:var(--muted); text-align:center; margin-top:10px;}
   ::selection{background:var(--gold); color:#211a0c;}
 </style>
@@ -510,8 +562,162 @@ const CATEGORIES = {
   ]}
 };
 
+const THEMES = {
+  default: {
+    label: "🕵️ Klassisch",
+    brandMark: "I", brandLeft: "IMPO", brandRight: "STER",
+    text: {
+      setupTitle: "Spieler hinzufügen",
+      setupSub: "Mindestens 3 Spieler.",
+      addPlaceholder: "Name eingeben",
+      toSettings: "Weiter",
+      settingsTitle: "Spieleinstellungen",
+      playersChosen: (n) => `${n} Spieler ausgewählt.`,
+      impostersLabel: "Anzahl Imposter",
+      categoriesLabel: "Kategorien",
+      categoriesSub: "Mindestens eine auswählen.",
+      hintToggleLabel: "Imposter bekommt Hinweis",
+      hintToggleDesc: "Ein Tipp statt komplett blind zu raten",
+      discussionTimeLabel: "Diskussionszeit",
+      minLabel: "min",
+      startBtn: "Spiel starten",
+      backBtn: "Zurück",
+      passGiveTo: "Gib das Handy weiter an",
+      passLookAway: "Alle anderen sollen wegschauen.",
+      passYourTurn: "Dran ist",
+      swipeHint: "Nach oben wischen<br>um dein Wort zu sehen",
+      imReady: (name) => `Ich bin ${name}`,
+      nextPlayer: "Weiter geben",
+      toDiscussion: "Zur Diskussion",
+      rememberNote: "Merk dir alles gut, dann weiter.",
+      roleLabelAlert: "Achtung",
+      stampText: "IMPOSTER",
+      hintLabel: "Hinweis",
+      noHint: "Du bekommst keinen Hinweis.",
+      yourWordLabel: "Dein Wort",
+      categoryLabelPrefix: "Kategorie",
+      discussionTitle: "Diskussionsrunde",
+      discussionSub: "Beschreibt reihum euer Wort in einem Begriff.",
+      starterSuffix: "fängt an",
+      timerStart: "Start",
+      timerPause: "Pause",
+      timerReset: "Reset",
+      revealRoles: "Rollen aufdecken",
+      resultsTitle: "Auflösung",
+      wordWasLabel: "Das gesuchte Wort war",
+      impostersInGame: (n) => `${n} Imposter im Spiel:`,
+      playAgain: "Nochmal spielen (gleiche Spieler)",
+      newPlayers: "Neue Spielerliste",
+      roleImposter: "IMPOSTER",
+      roleCrew: "MITSPIELER",
+      goofyTag: "Fick dich Goofy"
+    }
+  },
+  pink: {
+    label: "💖 Pink",
+    brandMark: "☕", brandLeft: "ESPRE", brandRight: "SSO",
+    text: {
+      setupTitle: "Add ur besties",
+      setupSub: "Mindestens 3 besties, bestie.",
+      addPlaceholder: "Name eingeben, bestie",
+      toSettings: "Weiter, slay",
+      settingsTitle: "Vibe Check Settings",
+      playersChosen: (n) => `${n} besties am Start.`,
+      impostersLabel: "Anzahl Icks",
+      categoriesLabel: "Vibes",
+      categoriesSub: "Mindestens eine auswählen, bestie.",
+      hintToggleLabel: "Ick bekommt Tea",
+      hintToggleDesc: "Ein kleiner Tipp, keep it cute",
+      discussionTimeLabel: "Spill-Time",
+      minLabel: "min",
+      startBtn: "Let's Slay 💅",
+      backBtn: "Zurück, bestie",
+      passGiveTo: "Gib das Handy weiter an",
+      passLookAway: "Alle anderen: nicht gucken, bestie!",
+      passYourTurn: "It's giving",
+      swipeHint: "Swipe up, bestie<br>für die Tea ☕",
+      imReady: (name) => `Ich bin ${name}, let's go`,
+      nextPlayer: "Weiter geben, slay",
+      toDiscussion: "Spill Time",
+      rememberNote: "Merk's dir gut, bestie, dann weiter.",
+      roleLabelAlert: "Uh oh",
+      stampText: "ICK 💔",
+      hintLabel: "Tea",
+      noHint: "Keine Tea für dich, bestie.",
+      yourWordLabel: "Dein Slay-Wort",
+      categoryLabelPrefix: "Vibe",
+      discussionTitle: "Spill The Tea",
+      discussionSub: "Jede:r beschreibt sein Wort in einem Begriff, bestie style.",
+      starterSuffix: "fängt an, bestie!",
+      timerStart: "Go girl",
+      timerPause: "Pause",
+      timerReset: "Reset",
+      revealRoles: "Tea aufdecken",
+      resultsTitle: "The Tea Has Been Spilled",
+      wordWasLabel: "Das Wort war, bestie",
+      impostersInGame: (n) => `${n} Ick(s) in der Group Chat:`,
+      playAgain: "Nochmal, bestie (gleiche Squad)",
+      newPlayers: "Neue Squad",
+      roleImposter: "ICK 💔",
+      roleCrew: "BESTIE 💖",
+      goofyTag: "Fick dich Goofy"
+    }
+  },
+  redneck: {
+    label: "🤠 Redneck",
+    brandMark: "🦅", brandLeft: "RAT", brandRight: "PATROL",
+    text: {
+      setupTitle: "Round up yer crew",
+      setupSub: "Brauchst mindestens 3, partner.",
+      addPlaceholder: "Name eingeben, partner",
+      toSettings: "Next",
+      settingsTitle: "Rig The Rules",
+      playersChosen: (n) => `${n} partner am Start.`,
+      impostersLabel: "Anzahl Ratten",
+      categoriesLabel: "Kategorien",
+      categoriesSub: "Mindestens eine auswählen, partner.",
+      hintToggleLabel: "Ratte kriegt 'nen Clue",
+      hintToggleDesc: "'n kleiner Hinweis statt blind rumzurennen",
+      discussionTimeLabel: "Talkin' Time",
+      minLabel: "min",
+      startBtn: "Fire It Up 🔥",
+      backBtn: "Zurück, partner",
+      passGiveTo: "Reich das Handy weiter an",
+      passLookAway: "Alle anderen: Augen zu, ihr Hosenschisser!",
+      passYourTurn: "Als Nächstes dran",
+      swipeHint: "Wisch's hoch, partner<br>und sieh dein Wort",
+      imReady: (name) => `Ich bin ${name}, auf geht's`,
+      nextPlayer: "Weiterreichen",
+      toDiscussion: "Zum Showdown",
+      rememberNote: "Merk's dir gut, dann geht's weiter.",
+      roleLabelAlert: "Achtung, partner",
+      stampText: "RATTE 🐀",
+      hintLabel: "Clue",
+      noHint: "Keinen Clue für dich, partner.",
+      yourWordLabel: "Dein Wort, partner",
+      categoryLabelPrefix: "Kategorie",
+      discussionTitle: "The Showdown",
+      discussionSub: "Jede:r beschreibt sein Wort in einem Begriff, y'all.",
+      starterSuffix: "legt los, y'all!",
+      timerStart: "Rev Up",
+      timerPause: "Hold Up",
+      timerReset: "Reset",
+      revealRoles: "Ratte enttarnen",
+      resultsTitle: "Showdown vorbei",
+      wordWasLabel: "Das gesuchte Wort war, partner",
+      impostersInGame: (n) => `${n} Ratte(n) in der Herde:`,
+      playAgain: "Nochmal (gleiche Crew)",
+      newPlayers: "Neue Crew",
+      roleImposter: "RATTE 🐀",
+      roleCrew: "TRUE BLUE 🇺🇸",
+      goofyTag: "Fick dich Goofy"
+    }
+  }
+};
+
 let state = {
   screen: "setup",
+  theme: "default",
   players: [],
   numImposters: 1,
   categories: Object.fromEntries(Object.keys(CATEGORIES).map(k => [k, true])),
@@ -531,6 +737,30 @@ let state = {
 
 const app = document.getElementById("app");
 
+function T(){
+  return THEMES[state.theme].text;
+}
+
+function setTheme(key){
+  state.theme = key;
+  document.documentElement.setAttribute("data-theme", key);
+  render();
+}
+
+function themeSwitcher(){
+  return `<div class="theme-switch">
+    ${Object.entries(THEMES).map(([key, th]) => `
+      <div class="theme-btn ${state.theme === key ? "active" : ""}" data-theme-key="${key}">${th.label}</div>
+    `).join("")}
+  </div>`;
+}
+
+function bindThemeSwitcher(){
+  document.querySelectorAll("[data-theme-key]").forEach(el => {
+    el.addEventListener("click", () => setTheme(el.dataset.themeKey));
+  });
+}
+
 function render(){
   if(state.screen === "setup") renderSetup();
   else if(state.screen === "settings") renderSettings();
@@ -540,26 +770,30 @@ function render(){
 }
 
 function brandHeader(){
+  const th = THEMES[state.theme];
   return `<div class="brand">
-    <div class="brand-mark">I</div>
-    <div class="brand-text">IMPO<span>STER</span></div>
+    <div class="brand-mark">${th.brandMark}</div>
+    <div class="brand-text">${th.brandLeft}<span>${th.brandRight}</span></div>
   </div>`;
 }
 
 function renderSetup(){
+  const t = T();
   app.innerHTML = `
+    ${themeSwitcher()}
     ${brandHeader()}
-    <h1>Spieler hinzufügen</h1>
-    <p class="sub">Mindestens 3 Spieler.</p>
+    <h1>${t.setupTitle}</h1>
+    <p class="sub">${t.setupSub}</p>
     <div class="row" style="margin-bottom:16px;">
-      <input type="text" id="playerInput" class="grow" placeholder="Name eingeben" maxlength="16">
+      <input type="text" id="playerInput" class="grow" placeholder="${t.addPlaceholder}" maxlength="16">
       <button class="btn btn-primary" style="width:auto; padding:13px 18px;" id="addPlayerBtn">+</button>
     </div>
     <div class="player-list" id="playerList"></div>
     <div class="bottom-actions">
-      <button class="btn btn-primary" id="toSettingsBtn" disabled>Weiter</button>
+      <button class="btn btn-primary" id="toSettingsBtn" disabled>${t.toSettings}</button>
     </div>
   `;
+  bindThemeSwitcher();
   const list = document.getElementById("playerList");
   state.players.forEach((name, i) => {
     const row = document.createElement("div");
@@ -597,14 +831,16 @@ function renderSetup(){
 }
 
 function renderSettings(){
+  const t = T();
   const maxImp = Math.max(1, Math.floor(state.players.length / 2));
   app.innerHTML = `
+    ${themeSwitcher()}
     ${brandHeader()}
-    <h1>Spieleinstellungen</h1>
-    <p class="sub">${state.players.length} Spieler ausgewählt.</p>
+    <h1>${t.settingsTitle}</h1>
+    <p class="sub">${t.playersChosen(state.players.length)}</p>
 
     <div class="card">
-      <h2>Anzahl Imposter</h2>
+      <h2>${t.impostersLabel}</h2>
       <div class="stepper" style="margin-top:10px;">
         <button id="impMinus">−</button>
         <span class="val" id="impVal">${state.numImposters}</span>
@@ -613,34 +849,35 @@ function renderSettings(){
     </div>
 
     <div class="card">
-      <h2>Kategorien</h2>
-      <p class="sub" style="margin-bottom:10px;">Mindestens eine auswählen.</p>
+      <h2>${t.categoriesLabel}</h2>
+      <p class="sub" style="margin-bottom:10px;">${t.categoriesSub}</p>
       <div class="cat-grid" id="catGrid"></div>
     </div>
 
     <div class="card">
       <div class="toggle-row">
-        <div class="label-row">Imposter bekommt Hinweis
-          <div class="desc">Ein Tipp statt komplett blind zu raten</div>
+        <div class="label-row">${t.hintToggleLabel}
+          <div class="desc">${t.hintToggleDesc}</div>
         </div>
         <div class="switch ${state.imposterKnowsCategory ? "on":""}" id="hintSwitch"><div class="knob"></div></div>
       </div>
     </div>
 
     <div class="card">
-      <h2>Diskussionszeit</h2>
+      <h2>${t.discussionTimeLabel}</h2>
       <div class="stepper" style="margin-top:10px;">
         <button id="timeMinus">−</button>
-        <span class="val" id="timeVal">${Math.round(state.discussionSeconds/60)} min</span>
+        <span class="val" id="timeVal">${Math.round(state.discussionSeconds/60)} ${t.minLabel}</span>
         <button id="timePlus">+</button>
       </div>
     </div>
 
     <div class="bottom-actions">
-      <button class="btn btn-primary" id="startBtn">Spiel starten</button>
-      <button class="btn btn-ghost" id="backBtn">Zurück</button>
+      <button class="btn btn-primary" id="startBtn">${t.startBtn}</button>
+      <button class="btn btn-ghost" id="backBtn">${t.backBtn}</button>
     </div>
   `;
+  bindThemeSwitcher();
 
   document.getElementById("impMinus").addEventListener("click", () => {
     state.numImposters = Math.max(1, state.numImposters - 1);
@@ -717,6 +954,7 @@ function shuffle(arr){
 }
 
 function renderPass(){
+  const t = T();
   const i = state.revealIndex;
   const total = state.players.length;
   const name = state.players[i];
@@ -731,46 +969,48 @@ function renderPass(){
   }
 
   app.innerHTML = `
+    ${themeSwitcher()}
     ${brandHeader()}
     <div class="progress-dots">${dots}</div>
     <div class="center-flow">
-      ${name.trim().toLowerCase() === "goofy" ? `<div class="goofy-tag">Fick dich Goofy</div>` : ""}
+      ${name.trim().toLowerCase() === "goofy" ? `<div class="goofy-tag">${t.goofyTag}</div>` : ""}
       ${state.revealStage === "waiting" ? `
-        <p class="sub" style="margin-bottom:0;">Gib das Handy weiter an</p>
+        <p class="sub" style="margin-bottom:0;">${t.passGiveTo}</p>
         <div class="pass-name">${escapeHtml(name)}</div>
-        <p class="sub">Alle anderen sollen wegschauen.</p>
+        <p class="sub">${t.passLookAway}</p>
       ` : `
-        <p class="sub" style="margin-bottom:0;">Dran ist</p>
+        <p class="sub" style="margin-bottom:0;">${t.passYourTurn}</p>
         <div class="pass-name">${escapeHtml(name)}</div>
       `}
 
       <div class="folder-wrap" id="folderWrap">
         <div class="content ${state.revealStage === "revealed" ? "revealed" : ""}" id="content">
           ${isImposter ? `
-            <div class="role-label">Achtung</div>
-            <div class="stamp">IMPOSTER</div>
-            ${state.imposterKnowsCategory ? `<div class="category-tag">Hinweis: <strong>${escapeHtml(state.hint)}</strong></div>` : `<div class="category-tag">Du bekommst keinen Hinweis.</div>`}
+            <div class="role-label">${t.roleLabelAlert}</div>
+            <div class="stamp">${t.stampText}</div>
+            ${state.imposterKnowsCategory ? `<div class="category-tag">${t.hintLabel}: <strong>${escapeHtml(state.hint)}</strong></div>` : `<div class="category-tag">${t.noHint}</div>`}
           ` : `
-            <div class="role-label">Dein Wort</div>
+            <div class="role-label">${t.yourWordLabel}</div>
             <div class="secret-word">${escapeHtml(state.word)}</div>
-            <div class="category-tag">Kategorie: ${escapeHtml(state.categoryLabel)}</div>
+            <div class="category-tag">${t.categoryLabelPrefix}: ${escapeHtml(state.categoryLabel)}</div>
           `}
         </div>
         <div class="cover" id="cover">
           <div class="hint-text">
-            <span>Nach oben wischen<br>um dein Wort zu sehen</span>
+            <span>${t.swipeHint}</span>
             <span class="arrow">↑</span>
           </div>
           <div class="tab"></div>
         </div>
       </div>
-      <div class="reveal-note" id="revealNote">${state.revealStage === "revealed" ? "Merk dir alles gut, dann weiter." : ""}</div>
+      <div class="reveal-note" id="revealNote">${state.revealStage === "revealed" ? t.rememberNote : ""}</div>
     </div>
 
     <div class="bottom-actions">
-      <button class="btn btn-primary" id="mainActionBtn">${state.revealStage === "waiting" ? "Ich bin " + escapeHtml(name) : (i === total - 1 ? "Zur Diskussion" : "Weiter geben")}</button>
+      <button class="btn btn-primary" id="mainActionBtn">${state.revealStage === "waiting" ? t.imReady(escapeHtml(name)) : (i === total - 1 ? t.toDiscussion : t.nextPlayer)}</button>
     </div>
   `;
+  bindThemeSwitcher();
 
   const coverEl = document.getElementById("cover");
   const wrapEl = document.getElementById("folderWrap");
@@ -870,6 +1110,7 @@ const TIMER_RADIUS = 95;
 const TIMER_CIRC = 2 * Math.PI * TIMER_RADIUS;
 
 function renderDiscussion(){
+  const t = T();
   const mm = Math.floor(state.timerRemaining / 60);
   const ss = state.timerRemaining % 60;
   const timeStr = `${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
@@ -878,10 +1119,11 @@ function renderDiscussion(){
   const isDanger = state.timerRemaining <= 10 && state.timerRemaining > 0;
 
   app.innerHTML = `
+    ${themeSwitcher()}
     ${brandHeader()}
-    <h1>Diskussionsrunde</h1>
-    <p class="sub" style="margin-bottom:6px;">Beschreibt reihum euer Wort in einem Begriff.</p>
-    <p class="starter-tag">${escapeHtml(state.players[state.starterIndex])} fängt an</p>
+    <h1>${t.discussionTitle}</h1>
+    <p class="sub" style="margin-bottom:6px;">${t.discussionSub}</p>
+    <p class="starter-tag">${escapeHtml(state.players[state.starterIndex])} ${t.starterSuffix}</p>
     <div class="timer-circle">
       <svg viewBox="0 0 220 220" width="220" height="220">
         <circle class="timer-ring-track" cx="110" cy="110" r="${TIMER_RADIUS}" fill="none" stroke-width="10"/>
@@ -891,13 +1133,14 @@ function renderDiscussion(){
       <div class="time" id="timeDisplay">${timeStr}</div>
     </div>
     <div class="row" style="max-width:320px; margin:0 auto 8px;">
-      <button class="btn grow" id="timerToggle">${state.timerRunning ? "Pause" : "Start"}</button>
-      <button class="btn grow" id="timerReset">Reset</button>
+      <button class="btn grow" id="timerToggle">${state.timerRunning ? t.timerPause : t.timerStart}</button>
+      <button class="btn grow" id="timerReset">${t.timerReset}</button>
     </div>
     <div class="bottom-actions">
-      <button class="btn btn-primary" id="toResults">Rollen aufdecken</button>
+      <button class="btn btn-primary" id="toResults">${t.revealRoles}</button>
     </div>
   `;
+  bindThemeSwitcher();
 
   document.getElementById("timerToggle").addEventListener("click", () => {
     state.timerRunning = !state.timerRunning;
@@ -951,28 +1194,31 @@ function stopTimer(){
 }
 
 function renderResults(){
+  const t = T();
   const impCount = state.roles.filter(r => r === "imposter").length;
   app.innerHTML = `
+    ${themeSwitcher()}
     ${brandHeader()}
-    <h1>Auflösung</h1>
+    <h1>${t.resultsTitle}</h1>
     <div class="word-reveal-box">
-      <div class="small-note" style="margin-top:0;">Das gesuchte Wort war</div>
+      <div class="small-note" style="margin-top:0;">${t.wordWasLabel}</div>
       <div class="w">${escapeHtml(state.word)}</div>
-      <div class="small-note">Kategorie: ${escapeHtml(state.categoryLabel)}</div>
+      <div class="small-note">${t.categoryLabelPrefix}: ${escapeHtml(state.categoryLabel)}</div>
     </div>
-    <p class="sub" style="margin-bottom:8px;">${impCount} Imposter im Spiel:</p>
+    <p class="sub" style="margin-bottom:8px;">${t.impostersInGame(impCount)}</p>
     <div class="results-list" id="resultsList"></div>
     <div class="bottom-actions">
-      <button class="btn btn-primary" id="playAgainBtn">Nochmal spielen (gleiche Spieler)</button>
-      <button class="btn btn-ghost" id="newGameBtn">Neue Spielerliste</button>
+      <button class="btn btn-primary" id="playAgainBtn">${t.playAgain}</button>
+      <button class="btn btn-ghost" id="newGameBtn">${t.newPlayers}</button>
     </div>
   `;
+  bindThemeSwitcher();
   const list = document.getElementById("resultsList");
   state.players.forEach((name, i) => {
     const isImp = state.roles[i] === "imposter";
     const row = document.createElement("div");
     row.className = "result-row" + (isImp ? " imp" : "");
-    row.innerHTML = `<span>${escapeHtml(name)}</span><span class="result-role">${isImp ? "IMPOSTER" : "MITSPIELER"}</span>`;
+    row.innerHTML = `<span>${escapeHtml(name)}</span><span class="result-role">${isImp ? t.roleImposter : t.roleCrew}</span>`;
     list.appendChild(row);
   });
 
